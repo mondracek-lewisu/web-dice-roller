@@ -1,10 +1,90 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yahtzee Dice Roller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Roboto+Mono:wght@500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="main.css" />
 </head>
-<body>
-    
+<body onload="rollAllDice()">
+
+  <main class="tray">
+
+    <header class="tray__header">
+      <p class="tray__eyebrow">Five dice, one roll</p>
+      <h1 class="tray__title">Yahtzee Dice Roller</h1>
+      <p class="tray__instructions">
+        Roll five dice at once and read each result straight off its scorecard slot below.
+        The tray rolls automatically when the page opens &mdash; after that, click
+        <strong>Roll the Dice</strong> (or press Enter) whenever you're ready for the next turn.
+      </p>
+    </header>
+
+    <section class="felt" aria-label="Dice results">
+      <div class="die" data-die="1" data-value="1" role="img" aria-label="Die 1">
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+      </div>
+      <div class="die" data-die="2" data-value="1" role="img" aria-label="Die 2">
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+      </div>
+      <div class="die" data-die="3" data-value="1" role="img" aria-label="Die 3">
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+      </div>
+      <div class="die" data-die="4" data-value="1" role="img" aria-label="Die 4">
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+      </div>
+      <div class="die" data-die="5" data-value="1" role="img" aria-label="Die 5">
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+      </div>
+    </section>
+
+    <section class="scorecard" aria-label="Roll values">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Die 1</th>
+            <th scope="col">Die 2</th>
+            <th scope="col">Die 3</th>
+            <th scope="col">Die 4</th>
+            <th scope="col">Die 5</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input id="value-1" class="value-field" type="text" inputmode="numeric" readonly value="1" aria-label="Die 1 result" /></td>
+            <td><input id="value-2" class="value-field" type="text" inputmode="numeric" readonly value="1" aria-label="Die 2 result" /></td>
+            <td><input id="value-3" class="value-field" type="text" inputmode="numeric" readonly value="1" aria-label="Die 3 result" /></td>
+            <td><input id="value-4" class="value-field" type="text" inputmode="numeric" readonly value="1" aria-label="Die 4 result" /></td>
+            <td><input id="value-5" class="value-field" type="text" inputmode="numeric" readonly value="1" aria-label="Die 5 result" /></td>
+            <td><input id="value-total" class="value-field value-field--total" type="text" inputmode="numeric" readonly value="5" aria-label="Total of all dice" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="controls">
+      <button id="roll-button" type="button" class="roll-button" autofocus onclick="rollAllDice()">
+        Roll the Dice
+      </button>
+      <p class="controls__hint">Enter re-rolls too &mdash; the button stays focused for your next turn.</p>
+    </div>
+
+  </main>
+
+  <script src="main.js"></script>
 </body>
 </html>

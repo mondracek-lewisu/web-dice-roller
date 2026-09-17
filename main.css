@@ -1,0 +1,320 @@
+/* ---------------------------------------------------------
+   Tokens
+--------------------------------------------------------- */
+:root {
+  --felt-dark: #1f5c4a;
+  --felt-light: #2c7a5c;
+  --wood: #6b4226;
+  --wood-dark: #4a2d19;
+  --ivory: #f6f0e2;
+  --charcoal: #2b2320;
+  --gold: #c9a227;
+  --gold-bright: #e0bb3a;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Karla", "Segoe UI", sans-serif;
+  --font-mono: "Roboto Mono", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background:
+    radial-gradient(circle at 50% 0%, var(--felt-light), var(--felt-dark) 70%);
+  background-attachment: fixed;
+}
+
+/* Subtle felt texture without an external image */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+
+/* ---------------------------------------------------------
+   Tray
+--------------------------------------------------------- */
+.tray {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: var(--wood);
+  border-radius: 18px;
+  padding: 8px;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.tray::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 12px;
+  border: 2px solid var(--wood-dark);
+  pointer-events: none;
+}
+
+.tray > * {
+  position: relative;
+}
+
+.tray__header {
+  padding: 28px 32px 20px;
+}
+
+.tray__eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.8rem;
+  color: var(--gold-bright);
+  letter-spacing: 0.02em;
+}
+
+.tray__title {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--ivory);
+  font-optical-sizing: auto;
+}
+
+.tray__instructions {
+  margin: 0;
+  max-width: 62ch;
+  line-height: 1.55;
+  color: rgba(246, 240, 226, 0.85);
+  font-size: 0.98rem;
+}
+
+.tray__instructions strong {
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   Felt well holding the dice
+--------------------------------------------------------- */
+.felt {
+  margin: 0 16px;
+  padding: 28px 16px;
+  border-radius: 10px;
+  background: var(--felt-dark);
+  box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 2.4vw, 18px);
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------
+   Individual die
+--------------------------------------------------------- */
+.die {
+  --die-size: clamp(52px, 12vw, 72px);
+  width: var(--die-size);
+  height: var(--die-size);
+  background: var(--ivory);
+  border-radius: 14%;
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.25),
+    0 8px 14px rgba(0, 0, 0, 0.35);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: calc(var(--die-size) * 0.12);
+  gap: calc(var(--die-size) * 0.04);
+}
+
+.die.is-rolling {
+  animation: tumble 0.5s ease-out;
+}
+
+@keyframes tumble {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(-18deg) scale(1.05); }
+  50%  { transform: rotate(14deg) scale(1.08); }
+  75%  { transform: rotate(-8deg) scale(1.03); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .die.is-rolling {
+    animation: none;
+  }
+}
+
+.pip {
+  border-radius: 50%;
+  background: transparent;
+  align-self: center;
+  justify-self: center;
+  width: 68%;
+  height: 68%;
+}
+
+/* Pip layout per face value, using the classic 3x3 nine-slot grid */
+.die[data-value="1"] .pip:nth-child(5) { background: var(--charcoal); }
+
+.die[data-value="2"] .pip:nth-child(1),
+.die[data-value="2"] .pip:nth-child(9) { background: var(--charcoal); }
+
+.die[data-value="3"] .pip:nth-child(1),
+.die[data-value="3"] .pip:nth-child(5),
+.die[data-value="3"] .pip:nth-child(9) { background: var(--charcoal); }
+
+.die[data-value="4"] .pip:nth-child(1),
+.die[data-value="4"] .pip:nth-child(3),
+.die[data-value="4"] .pip:nth-child(7),
+.die[data-value="4"] .pip:nth-child(9) { background: var(--charcoal); }
+
+.die[data-value="5"] .pip:nth-child(1),
+.die[data-value="5"] .pip:nth-child(3),
+.die[data-value="5"] .pip:nth-child(5),
+.die[data-value="5"] .pip:nth-child(7),
+.die[data-value="5"] .pip:nth-child(9) { background: var(--charcoal); }
+
+.die[data-value="6"] .pip:nth-child(1),
+.die[data-value="6"] .pip:nth-child(3),
+.die[data-value="6"] .pip:nth-child(4),
+.die[data-value="6"] .pip:nth-child(6),
+.die[data-value="6"] .pip:nth-child(7),
+.die[data-value="6"] .pip:nth-child(9) { background: var(--charcoal); }
+
+/* ---------------------------------------------------------
+   Scorecard table of read-only values
+--------------------------------------------------------- */
+.scorecard {
+  padding: 22px 32px 4px;
+  overflow-x: auto;
+}
+
+.scorecard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scorecard th {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  color: var(--gold-bright);
+  text-align: right;
+  padding: 0 6px 8px;
+}
+
+.scorecard td {
+  padding: 0 6px;
+}
+
+.value-field {
+  width: 100%;
+  min-width: 44px;
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: right;
+  color: var(--charcoal);
+  background: var(--ivory);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 12px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.value-field--total {
+  color: var(--wood-dark);
+  background: #efe2b8;
+  box-shadow: inset 0 0 0 1px rgba(107, 66, 38, 0.35);
+}
+
+.value-field:focus {
+  outline: 3px solid var(--gold-bright);
+  outline-offset: 1px;
+}
+
+/* ---------------------------------------------------------
+   Controls
+--------------------------------------------------------- */
+.controls {
+  padding: 24px 32px 32px;
+  text-align: center;
+}
+
+.roll-button {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--wood-dark);
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  border: none;
+  border-radius: 999px;
+  padding: 14px 40px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #96771a, 0 10px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.08s ease;
+}
+
+.roll-button:hover {
+  filter: brightness(1.04);
+}
+
+.roll-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #96771a, 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.roll-button:focus-visible {
+  outline: 3px solid var(--ivory);
+  outline-offset: 3px;
+}
+
+.controls__hint {
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+  color: rgba(246, 240, 226, 0.7);
+}
+
+/* ---------------------------------------------------------
+   Small screens
+--------------------------------------------------------- */
+@media (max-width: 420px) {
+  .tray__header,
+  .scorecard,
+  .controls {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .felt {
+    margin: 0 10px;
+  }
+
+  .scorecard th {
+    font-size: 0.68rem;
+  }
+}
